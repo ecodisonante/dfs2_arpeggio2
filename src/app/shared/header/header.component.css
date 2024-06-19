@@ -1,0 +1,82 @@
+/*
+
+paleta colores
+
+Rosewater
+#E8B4B8
+
+Dusty Rose
+#EED6D3
+
+Coffee Pot
+#A49393
+
+Coffee Pot
+#67595E
+*/
+.top-banner img {
+    height: 100px;
+    margin: 15px 0;
+}
+
+
+.bar-logo-off {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.bar-logo-on {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.nav-item {
+    padding: inherit 3rem;
+    cursor: pointer;
+}
+
+[data-content] {
+    display: none;
+}
+
+.active[data-content] {
+    display: block;
+}
+
+section {
+    margin-top: 0;
+}
+
+.card-body img {
+    /**/
+}
+
+.filter {
+    background-color: #f5e1e3;
+    /* border-radius: 15px; */
+}
+
+.precio-antes {
+    color: red;
+    text-decoration: line-through;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.precio-oferta {
+    color: #5a5967;
+    font-weight: bolder;
+    font-size: 1.3rem;
+}
+
+.card {
+    transition: box-shadow 0.5s;
+}
+
+.card:hover {
+    box-shadow: 0 0 15px rgba(33, 33, 33, .3);
+}
+
+.chart-img{
+    max-width: 100px;
+}
