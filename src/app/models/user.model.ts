@@ -7,10 +7,10 @@ export class User {
     email: string;
     password: string;
     activo: boolean;
-    tempPass: string;
+    tempPass?: string;
     isAdmin: boolean;
 
-    constructor(username: string, nombre: string, apepat: string, apemat: string, direccion: string, email: string, password: string, activo: boolean, tempPass: string, isAdmin: boolean) {
+    constructor(username: string, nombre: string, apepat: string, apemat: string, direccion: string, email: string, password: string, activo: boolean, isAdmin: boolean, tempPass?: string) {
         this.username = username;
         this.nombre = nombre;
         this.apepat = apepat;
@@ -19,7 +19,7 @@ export class User {
         this.email = email;
         this.password = password;
         this.activo = activo;
-        this.tempPass = tempPass;
         this.isAdmin = isAdmin;
+        this.tempPass = tempPass;
     }
 }
