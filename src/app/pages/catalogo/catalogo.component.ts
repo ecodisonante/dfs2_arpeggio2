@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TestingData } from '../../models/testing-data';
+import { RouterLink } from '@angular/router';
 
 /**
  * @description
@@ -11,7 +12,7 @@ import { TestingData } from '../../models/testing-data';
 @Component({
   selector: 'app-catalogo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink, CommonModule],
   templateUrl: './catalogo.component.html',
   styleUrl: './catalogo.component.css'
 })

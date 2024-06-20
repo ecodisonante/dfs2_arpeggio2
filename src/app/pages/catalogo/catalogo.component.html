@@ -6,10 +6,12 @@
 
                     <div class="col-lg-3 col-md-6 my-3" *ngFor="let prod of catalogo">
                         <div class="card">
-                            <div class="card-body">
-                                <img [src]="prod.image" width="100%">
-                                <span>{{prod.name}}</span>
-                            </div>
+                            <a [routerLink]="[ '/product', prod.id ]">
+                                <div class="card-body">
+                                    <img [src]="prod.image" width="100%">
+                                    <span>{{prod.name}}</span>
+                                </div>
+                            </a>
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="precio-antes col-5">{{ prod.onSale ? prod.price : ""}}</div>
