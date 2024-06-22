@@ -1,0 +1,89 @@
+<router-outlet />
+
+<!--  Formulario Registrar-->
+<section data-content id="form-registrar">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mx-auto">
+
+                <h3>Registrar Nuevo Usuario</h3>
+
+                <form action="submit" id="registerForm">
+                    <div class="mb-3 mt-3">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" data-val="required">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="apepat">Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="apepat" name="apepat">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="apemat">Apellido Materno:</label>
+                        <input type="text" class="form-control" id="apemat" name="apemat">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="direccion">Dirección:</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" data-val="required">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="reg-email">Correo:</label>
+                        <input type="email" class="form-control" id="reg-email" name="reg-email" data-val="email">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="reg-username">Nombre de Usuario:</label>
+                        <input type="text" class="form-control" id="reg-username" name="reg-username"
+                            data-val="username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="reg-password">Contraseña:</label>
+                        <input type="password" class="form-control" id="reg-password" name="reg-password"
+                            data-val="password">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="repass">Repetir Contraseña:</label>
+                        <input type="password" class="form-control" id="repass" name="repass" data-val="repass">
+                    </div>
+
+                    <a type="menu" class="btn btn-danger" href="index.html">Volver</a>
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--  Formulario Recuperar-->
+<section data-content id="form-recuperar">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mx-auto">
+                <h3>Recuperar Contraseña</h3>
+
+                <form action="submit" id="passRecoveryForm">
+
+                    <div class="mb-3 mt-3">
+                        <label for="rec-email">Correo:</label>
+                        <input type="email" class="form-control" id="rec-email" name="rec-email" data-val="email">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="rec-username">Nombre de Usuario:</label>
+                        <input type="text" class="form-control" id="rec-username" name="rec-username"
+                            data-val="required">
+                    </div>
+
+                    <a type="menu" class="btn btn-danger" href="index.html">Volver</a>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section> -->

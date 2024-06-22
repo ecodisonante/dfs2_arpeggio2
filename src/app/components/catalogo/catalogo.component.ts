@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TestingData } from '../../models/testing-data';
 import { RouterLink } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 
 /**
  * @description
@@ -23,30 +23,20 @@ export default class CatalogoComponent implements OnInit {
   sale: any;
 
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private catalogService: ProductService) { }
 
   ngOnInit(): void {
 
     this.route.queryParams.subscribe(params => {
       this.category = params['category'];
       this.sale = params['sale'];
-      this.productFilter();
+      this.productFilter(this.sale, this.category);
     });
 
   }
 
-
-  productFilter() {
-    if (this.sale != undefined)
-      this.catalogo = TestingData.productList.filter(x => x.onSale);
-    else
-      this.catalogo = TestingData.productList;
-
-
-    if (this.category) {
-      this.catalogo = this.catalogo.filter(x => x.category.id == this.category);
-    }
-
+  productFilter(sale?: boolean, category?: number) {
+    this.catalogo = this.catalogService.filterProducts(sale, category);
   }
 
   addToChart(id: number) {
