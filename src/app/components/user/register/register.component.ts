@@ -7,6 +7,13 @@ import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.model';
 import Swal from 'sweetalert2';
 
+/**
+ * @description
+ * Componente para manejar el registro de nuevos usuarios.
+ * - Ejecuta validaciones requeridas para crear el nuevo usuario
+ * - Solo los administradores pueden crear nuevos usuarios con rol admin
+ * - El campo _username_ es unico y no puede crearse un nuevo usuario con un username preexistente
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -58,18 +65,6 @@ export default class RegisterComponent {
         true,
         formValue.isadmin,
         undefined
-
-
-        // this.registerForm.get('usuario')!.value,
-        // this.registerForm.get('nombres')!.value,
-        // this.registerForm.get('apepat')!.value,
-        // this.registerForm.get('apemat')!.value,
-        // this.registerForm.get('direccion')!.value,
-        // this.registerForm.get('correo')!.value,
-        // this.registerForm.get('passwd')!.value,
-        // true,
-        // this.registerForm.get('isadmin')!.value,
-        // undefined
       );
 
       if (this.userService.findUser(nuevo.username)) {
