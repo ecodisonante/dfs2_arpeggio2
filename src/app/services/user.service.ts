@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -8,13 +9,25 @@ export abstract class UserService {
     private userKey = 'authUser';
     private userListKey = 'userList';
 
-    constructor() { }
+    private isLoggedIn = new BehaviorSubject<boolean>(this.checkAuthenticated());
+    private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
     // --- login --- //
-    setUser(user: User): void {
+
+    logIn(user: User): void {
         // no almacenar la contraseña
         user.password = "";
         sessionStorage.setItem(this.userKey, JSON.stringify(user));
+        this.isLoggedIn.next(this.checkAuthenticated());
+        this.isAdmin.next(this.checkAdmin());
+    }
+
+    get isAuthenticated() {
+        return this.isLoggedIn.asObservable();
+    }
+
+    get isAdminAuth() {
+        return this.isAdmin.asObservable();
     }
 
     getUser(): User | null {
@@ -22,16 +35,18 @@ export abstract class UserService {
         return user ? JSON.parse(user) : null;
     }
 
-    removeUser(): void {
+    logOut(): void {
         sessionStorage.removeItem(this.userKey);
+        this.isLoggedIn.next(this.checkAuthenticated());
+        this.isAdmin.next(this.checkAdmin());
     }
 
-    isAuthenticated(): boolean {
+    checkAuthenticated(): boolean {
         return this.getUser() !== null;
     }
 
-    isAdmin(): boolean {
-        return this.isAuthenticated() && this.getUser()!.isAdmin;
+    checkAdmin(): boolean {
+        return this.getUser() !== null && this.getUser()!.isAdmin;
     }
 
 
@@ -49,4 +64,10 @@ export abstract class UserService {
         return this.getUserList()!.find(x => x.username === username);
     }
 
+    addUser(user: User) {
+        let userList = this.getUserList();
+        if (!userList) userList = [user];
+        else userList.push(user);
+        this.setUserList(userList);
+    }
 }
