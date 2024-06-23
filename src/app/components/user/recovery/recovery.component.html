@@ -5,21 +5,29 @@
             <div class="col-lg-4 col-md-6 mx-auto">
                 <h3>Recuperar Contraseña</h3>
 
-                <form action="submit" id="passRecoveryForm">
+                <form [formGroup]="recoveryForm" (ngSubmit)="recovery()">
 
                     <div class="mb-3 mt-3">
-                        <label for="rec-email">Correo:</label>
-                        <input type="email" class="form-control" id="rec-email" name="rec-email" data-val="email">
+                        <label for="correo">Correo:</label>
+                        <input type="email" class="form-control" formControlName="correo">
+                        <div
+                            *ngIf="recoveryForm.get('correo')?.touched && recoveryForm.get('correo')?.hasError('required')">
+                            Este campo es obligatorio</div>
+                        <div
+                            *ngIf="recoveryForm.get('correo')?.touched && recoveryForm.get('correo')?.hasError('email')">
+                            Debe ingresar un correo válido</div>
                     </div>
 
                     <div class="mb-3 mt-3">
-                        <label for="rec-username">Nombre de Usuario:</label>
-                        <input type="text" class="form-control" id="rec-username" name="rec-username"
-                            data-val="required">
+                        <label for="usuario">Nombre de Usuario:</label>
+                        <input type="text" class="form-control" formControlName="usuario">
+                        <div
+                            *ngIf="recoveryForm.get('usuario')?.touched && recoveryForm.get('usuario')?.hasError('required')">
+                            Este campo es obligatorio</div>
                     </div>
 
-                    <a type="menu" class="btn btn-danger" href="index.html">Volver</a>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <a type="menu" class="btn btn-danger me-3 my-3" [routerLink]="['']">Volver</a>
+                    <button type="submit" class="btn btn-primary ms-3 my-3">Enviar</button>
 
                 </form>
             </div>
