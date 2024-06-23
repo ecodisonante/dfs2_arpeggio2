@@ -3,6 +3,8 @@ import CatalogoComponent from './components/catalogo/catalogo.component';
 import ProductComponent from './components/product/product.component';
 import UserComponent from './components/user/user.component';
 import LoginComponent from './components/user/login/login.component';
+import RegisterComponent from './components/user/register/register.component';
+import RecoveryComponent from './components/user/recovery/recovery.component';
 
 export const routes: Routes = [
 
@@ -25,6 +27,16 @@ export const routes: Routes = [
                 path: 'login',
                 title: 'Ingresar',
                 component: LoginComponent,
+            },
+            {
+                path: 'register',
+                title: 'Crear Cuenta',
+                component: RegisterComponent,
+            },
+            {
+                path: 'recovery',
+                title: 'Recuperar Contraseña',
+                component: RecoveryComponent,
             }
         ]
     },

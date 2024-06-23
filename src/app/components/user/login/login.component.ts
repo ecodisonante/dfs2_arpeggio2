@@ -41,7 +41,7 @@ export default class LoginComponent {
       let user = this.userService.findUser(this.loginForm.get('username')?.value.trim().toLowerCase());
 
       if (user?.password === this.loginForm.get('password')?.value) {
-        this.userService.setUser(user!);
+        this.userService.logIn(user!);
         Swal.fire({
           icon: "success",
           title: "Bienvenido, " + user?.nombre,
