@@ -21,7 +21,7 @@ import Swal from 'sweetalert2';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export default class RegisterComponent {
+export class RegisterComponent {
   registerForm!: FormGroup;
   successRegister: boolean = false;
   isAdmin: boolean = false;

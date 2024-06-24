@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
-import CatalogoComponent from './components/catalogo/catalogo.component';
-import ProductComponent from './components/product/product.component';
-import UserComponent from './components/user/user.component';
-import LoginComponent from './components/user/login/login.component';
-import RegisterComponent from './components/user/register/register.component';
-import RecoveryComponent from './components/user/recovery/recovery.component';
+import { CatalogoComponent } from './components/catalogo/catalogo.component';
+import { ProductComponent } from './components/product/product.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import { RecoveryComponent } from './components/user/recovery/recovery.component';
+import { CartComponent } from './components/cart/cart.component';
 
 export const routes: Routes = [
 
@@ -17,6 +18,11 @@ export const routes: Routes = [
         path: 'product/:id',
         title: 'Producto',
         component: ProductComponent,
+    },
+    {
+        path: 'cart',
+        title: 'Carrito',
+        component: CartComponent,
     },
     {
         path: 'user',

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
 import { Router, RouterLink } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
+import { Cart } from '../../../models/cart.model';
 /**
  * @description
  * Componente encargado del inicio de sesion.
@@ -17,7 +19,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export default class LoginComponent {
+export class LoginComponent {
 
   loginForm!: FormGroup;
   successRegister: boolean = false;
@@ -25,7 +27,8 @@ export default class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) { }
 
 
@@ -42,6 +45,14 @@ export default class LoginComponent {
 
       if (user?.password === this.loginForm.get('password')?.value) {
         this.userService.logIn(user!);
+
+        // activar carrito del usuario
+        if (!user?.isAdmin) {
+          let cart = this.cartService.findUserCart(user!.username);
+          if (!cart) cart = new Cart(user!.username, [], 0, 0);
+          this.cartService.setActiveCart(cart);
+        }
+
         Swal.fire({
           icon: "success",
           title: "Bienvenido, " + user?.nombre,

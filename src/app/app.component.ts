@@ -6,6 +6,7 @@ import { FooterComponent } from "./shared/footer/footer.component";
 import { ProductService } from './services/product.service';
 import { TestingData } from './models/testing-data';
 import { UserService } from './services/user.service';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,15 @@ import { UserService } from './services/user.service';
 export class AppComponent {
   title = 'arpeggio5';
 
-  constructor(private productService: ProductService, private userService: UserService) { }
+  constructor(
+    private productService: ProductService,
+    private userService: UserService,
+    private cartService: CartService
+  ) { }
 
   ngOnInit(): void {
     if (!this.productService.getCatalog()) this.productService.setCatalog(TestingData.productList);
     if (!this.userService.getUserList()) this.userService.setUserList(TestingData.userList);
+    if (!this.cartService.getCartList()) this.cartService.setCartList([]);
   }
 }

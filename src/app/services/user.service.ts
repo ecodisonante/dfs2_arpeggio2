@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export abstract class UserService {
+export class UserService {
     private userKey = 'authUser';
     private userListKey = 'userList';
 
@@ -18,6 +18,8 @@ export abstract class UserService {
         // no almacenar la contraseña
         user.password = "";
         sessionStorage.setItem(this.userKey, JSON.stringify(user));
+
+        // recargar restricciones
         this.isLoggedIn.next(this.checkAuthenticated());
         this.isAdmin.next(this.checkAdmin());
     }

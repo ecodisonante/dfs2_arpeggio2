@@ -1,4 +1,4 @@
-<section data-content id="catalogo">
+<section id="catalogo">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -18,11 +18,11 @@
                                     <div class="precio-oferta col-7">{{ prod.onSale ? prod.salePrice : prod.price }}
                                     </div>
                                 </div>
-                                <button class="btn btn-primary btn-sm mt-2" (click)="addToChart(prod.id)">
+                                <button class="btn btn-primary btn-sm mt-2" (click)="addToCart(prod.id)">
                                     <i class="bi bi-bag mx-2"></i>Comprar</button>
                             </div>
                         </div>
-                    </div>`;
+                    </div>
                 </div>
             </div>
 

@@ -10,7 +10,7 @@ import { TestingData } from '../../models/testing-data';
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
-export default class ProductComponent {
+export  class ProductComponent {
 
   title: string = "";
   product?: Product;

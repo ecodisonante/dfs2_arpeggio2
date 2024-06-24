@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './recovery.component.html',
   styleUrl: './recovery.component.css'
 })
-export default class RecoveryComponent {
+export class RecoveryComponent {
   recoveryForm!: FormGroup;
 
 

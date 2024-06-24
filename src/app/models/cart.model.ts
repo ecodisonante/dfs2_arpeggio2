@@ -5,14 +5,12 @@ export class Cart {
     items: Product[];
     total: number;
     discount: number;
-    fecha: Date;
 
-    constructor(username: string, items: Product[], total: number, discount: number, fecha: Date,) {
+    constructor(username: string, items: Product[], total: number, discount: number) {
         this.username = username;
         this.items = items;
         this.total = total;
         this.discount = discount;
-        this.fecha = fecha;
     }
 
 }

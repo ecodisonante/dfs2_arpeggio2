@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
-export default class UserComponent {
+export class UserComponent {
 
   username: string = "";
   password: string = "";

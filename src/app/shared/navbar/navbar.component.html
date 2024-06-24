@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
     <div class="container">
         <a class="navbar-brand" [routerLink]="['catalogo']" [queryParams]="{sale: true}">
-            <img src="/images/logo_invtr.png" alt="Avatar Logo" style="width:40px;" id="bar-logo" [class]="logoClass">
+            <img src="/images/logo_nav.png" alt="Avatar Logo" id="bar-logo" [class]="logoClass">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
             <span class="navbar-toggler-icon"></span>
@@ -27,6 +27,10 @@
                 <li class="nav-item  mx-2">
                     <a class="nav-link" [routerLink]="['catalogo']" [queryParams]="{ category: 3}">
                         <i class="bi bi-bag mx-2"></i>Guitarras Eléctricas</a>
+                </li>
+                <li *ngIf="isAuthenticated && ! isAdmin" class="nav-item  mx-2 ms-auto">
+                    <a class="nav-link" [routerLink]="['/cart']">
+                        <i class="bi bi-cart-dash mx-2"></i>Mi Carrito</a>
                 </li>
                 <li class="nav-item mx-2 ms-auto dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person mx-2"></i>Usuario</a>
