@@ -5,7 +5,10 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
 
-
+/**
+ * @description
+ * Componente encargado de la recuperación de contraseña.
+ */
 @Component({
   selector: 'app-recovery',
   standalone: true,
@@ -14,8 +17,11 @@ import Swal from 'sweetalert2';
   styleUrl: './recovery.component.css'
 })
 export class RecoveryComponent {
-  recoveryForm!: FormGroup;
 
+  /**
+   * Formulario de recuperacion de contraseña
+   */
+  recoveryForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +36,12 @@ export class RecoveryComponent {
     });
   }
 
+  /**
+   * @description
+   * Genera la recuperación de contraseña para el usuario ingresado.
+   * - Valida que el username exista en los registros
+   * - Valida que el correo y el username coincidan en una misma cuenta
+   */
   recovery() {
     if (this.recoveryForm.valid) {
       const formValue = this.recoveryForm.value;

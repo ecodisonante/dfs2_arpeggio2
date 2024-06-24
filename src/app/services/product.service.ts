@@ -1,17 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 
+/**
+ * @description
+ * Clase de servicios relacionados a Producto
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
     private catalogKey = 'catalogKey';
 
+    /**
+     * @description
+     * Obtiene un producto a través de su ID
+     * 
+     * @param id ID del producto solicitado
+     */
     getProduct(id: number): Product | null {
         let prod = this.getCatalog()?.find(x => x.id === id);
         return prod ?? null;
     }
 
+    /**
+     * @description
+     * Actualiza un producto en el catalogo de productos
+     * 
+     * @param prod Producto a actualizar
+     */
     updateProduct(prod: Product) {
         let catalog = this.getCatalog();
         if (catalog) {
@@ -23,15 +39,30 @@ export class ProductService {
 
     // --- Repositorio --- //
 
+
+    /**
+     * @description
+     * Almacena el cataolgo completo de productos en el _localStorage_
+     * 
+     * @param catalog Listado de productos a almacenar
+     */
     setCatalog(catalog: Product[]): void {
         localStorage.setItem(this.catalogKey, JSON.stringify(catalog));
     }
 
+    /**
+     * @description
+     * Obtiene el cataolgo completo de productos desde _localStorage_
+     */
     getCatalog(): Product[] | null {
         let catalog = localStorage.getItem(this.catalogKey);
         return catalog ? JSON.parse(catalog) : null;
     }
 
+    /**
+     * @description
+     * Elimina el cataolgo completo de productos de _localStorage_
+     */
     removeCatalog(): void {
         localStorage.removeItem(this.catalogKey);
     }

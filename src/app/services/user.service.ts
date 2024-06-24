@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * @description
+ * Clase de servicios relacionados a Usuarios
+ */
 @Injectable({
     providedIn: 'root'
 })

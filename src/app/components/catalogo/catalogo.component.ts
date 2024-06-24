@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 /**
  * @description
- * Componente encargado de manejar los productos en la pantalla principal.
+ * Componente encargado de manejar el catalogo de productos.
  */
 @Component({
   selector: 'app-catalogo',
@@ -21,9 +21,21 @@ import Swal from 'sweetalert2';
 })
 export class CatalogoComponent implements OnInit {
 
+  /**
+   * Catalogo de productos
+   */
   catalogo: Product[] = [];
+  /**
+   * Categoría de productos a mostrar
+   */
   category: any;
+  /**
+   * Indicador para mostrar productos en oferta
+   */
   sale: any;
+  /**
+   * Indicador de usuario registrado con permisos de Admin
+   */
   isAdmin!: boolean;
 
   constructor(

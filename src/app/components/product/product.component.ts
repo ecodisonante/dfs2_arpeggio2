@@ -8,6 +8,10 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import Swal from 'sweetalert2';
 
+/**
+ * @description
+ * Componente encargado de los detalles de un producto.
+ */
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -17,8 +21,17 @@ import Swal from 'sweetalert2';
 })
 export class ProductComponent {
 
+  /**
+   * Formulario de edicion de producto
+   */
   productForm!: FormGroup;
+  /**
+   * Título del componente
+   */
   title: string = "";
+  /**
+   * Producto en edicion
+   */
   product!: Product;
 
   constructor(
@@ -59,6 +72,10 @@ export class ProductComponent {
     this.productForm.patchValue(this.product!);
   }
 
+  /**
+   * @description
+   * Persiste la modificacion de datos realizada a un producto.
+   */
   edit() {
     if (this.productForm.valid) {
       let edited = this.productForm.value;

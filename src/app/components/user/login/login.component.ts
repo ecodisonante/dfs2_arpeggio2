@@ -6,11 +6,10 @@ import Swal from 'sweetalert2';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { Cart } from '../../../models/cart.model';
+
 /**
  * @description
  * Componente encargado del inicio de sesion.
- * 
- * Valida que el usuario y la contraseña sean correctos y agrega el usuario a la sesión activa.
  */
 @Component({
   selector: 'app-login',
@@ -21,6 +20,9 @@ import { Cart } from '../../../models/cart.model';
 })
 export class LoginComponent {
 
+  /**
+   * Formulario de ingreso
+   */
   loginForm!: FormGroup;
 
   constructor(
@@ -38,6 +40,10 @@ export class LoginComponent {
     });
   }
 
+  /**
+   * @description
+   * Valida que el usuario y la contraseña sean correctos y agrega el usuario a la sesión activa.
+   */
   login() {
     if (this.loginForm.valid) {
       let user = this.userService.findUser(this.loginForm.get('username')?.value.trim().toLowerCase());
@@ -58,7 +64,7 @@ export class LoginComponent {
         }).then(() => {
           this.router.navigate(['/']);
         });
-        
+
       } else {
         Swal.fire({
           icon: "error",

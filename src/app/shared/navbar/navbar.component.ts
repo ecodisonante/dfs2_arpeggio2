@@ -5,6 +5,10 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 
+/**
+ * @description
+ * Componente encargado de manejar la barra de navegación.
+ */
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -25,6 +29,10 @@ export class NavbarComponent {
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
   }
 
+  /**
+   * @description
+   * Termina la sesión del usuario activo.
+   */
   salir() {
     this.userService.logOut();
     Swal.fire({
@@ -35,7 +43,10 @@ export class NavbarComponent {
     });
   }
 
-
+  /**
+   * @description
+   * Vuelve visible el logo de la barra de navegación cuando llega a la parte superior de la pantalla
+   */
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (window.scrollY > 130) {

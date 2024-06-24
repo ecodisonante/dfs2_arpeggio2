@@ -4,6 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 import { Cart } from '../models/cart.model';
 import { Product } from '../models/product.model';
 
+/**
+ * @description
+ * Clase de servicios relacionados a Carrito de Compras
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -99,15 +103,31 @@ export class CartService {
 
     // ---  repositorio --- //
 
+    /**
+     * @description
+     * Obtiene el carrito de compras del usuario activo
+     * 
+     * @param username usuario activo
+     */
     findUserCart(username: string): Cart | undefined {
         return this.getCartList()?.find(x => x.username === username);
     }
 
+    /**
+     * @description
+     * Obtiene la lista de todos los carritos de compra almacenados en _localStorage_
+     */
     getCartList(): Cart[] | null {
         let cartList = localStorage.getItem(this.cartListKey);
         return cartList ? JSON.parse(cartList) : null;
     }
 
+    /**
+     * @description
+     * Almacena la lista de todos los carritos de compra almacenados en _localStorage_
+     * 
+     * @param carts lista de carritos de compra
+     */
     setCartList(carts: Cart[]) {
         localStorage.setItem(this.cartListKey, JSON.stringify(carts));
     }

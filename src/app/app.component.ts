@@ -8,6 +8,9 @@ import { TestingData } from './models/testing-data';
 import { UserService } from './services/user.service';
 import { CartService } from './services/cart.service';
 
+/**
+ * Componente principal
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,11 +19,23 @@ import { CartService } from './services/cart.service';
   imports: [RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent]
 })
 export class AppComponent {
-  title = 'arpeggio5';
+  /**
+   * Titulo de la pagina
+   */
+  title = 'arpeggio2';
 
   constructor(
+    /**
+     * Servicio de Productos
+     */
     private productService: ProductService,
+    /**
+     * Servicio de Usuarios
+     */
     private userService: UserService,
+    /**
+     * Servicio de Carrito de Compras
+     */
     private cartService: CartService
   ) { }
 

@@ -7,6 +7,10 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+/**
+ * @description
+ * Componente encargado de manejar el carrito de compras.
+ */
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -16,7 +20,13 @@ import Swal from 'sweetalert2';
 })
 export class CartComponent {
 
+  /**
+   * Carrito de compras
+   */
   cart!: Cart;
+  /**
+   * Usuario registrado
+   */
   user?: User;
 
   constructor(
@@ -33,22 +43,36 @@ export class CartComponent {
     this.getActiveCart();
   }
 
+  /**
+   * @description
+   * Obtiene el carrito de compras del usuario activo.
+   */
   getActiveCart() {
     this.cart = this.cartService.getActiveCart() ?? new Cart(this.user!.username, [], 0, 0);
   }
 
-
+  /**
+   * @description
+   * Elimina un producto del carrito de compras del usuario activo.
+   */
   removeFromChart(id: number) {
     this.cartService.removeFromActiveCart(id);
     this.getActiveCart();
-
   }
 
+  /**
+   * @description
+   * Elimina todos los productos del carrito de compras del usuario activo.
+   */
   clearChart() {
     this.cart = new Cart(this.user!.username, [], 0, 0);
     this.cartService.setActiveCart(this.cart);
   }
 
+  /**
+   * @description
+   * Procesa el pago de los productos que se encuentran en el carrito de compras del usuario activo.
+   */
   pagar() {
     //TODO
     Swal.fire({

@@ -10,9 +10,6 @@ import Swal from 'sweetalert2';
 /**
  * @description
  * Componente para manejar el registro de nuevos usuarios.
- * - Ejecuta validaciones requeridas para crear el nuevo usuario
- * - Solo los administradores pueden crear nuevos usuarios con rol admin
- * - El campo _username_ es unico y no puede crearse un nuevo usuario con un username preexistente
  */
 @Component({
   selector: 'app-register',
@@ -22,8 +19,17 @@ import Swal from 'sweetalert2';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  /**
+   * Formulario de registro
+   */
   registerForm!: FormGroup;
+  /**
+   * Indicador de registro exitoso
+   */
   successRegister: boolean = false;
+  /**
+   * Indicador de usuario con permisos de Admin
+   */
   isAdmin: boolean = false;
 
   constructor(
@@ -50,6 +56,12 @@ export class RegisterComponent {
     });
   }
 
+  /**
+   * @description
+   * Genera un nuevo usuario con los datos ingresados en el formulario
+   * - Verifica que el username no haya sido utilizado previamente
+   * - Solo los administradores pueden crear nuevos usuarios con rol admin
+   */
   register() {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;

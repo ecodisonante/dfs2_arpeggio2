@@ -2,15 +2,23 @@ import { Category } from "./category.model";
 import { Product } from "./product.model";
 import { User } from "./user.model";
 
+/**
+ * Contiene objetos con datos ficticios de los demás modelos para simular persistencia
+ */
 export abstract class TestingData {
 
+    /**
+     * Lista de prueba categorias de productos
+     */
     public static categoryList = [
         new Category(1, "Guitarras Acúsicas"),
         new Category(2, "Guitarras Eléctricas"),
         new Category(3, "Guitarras Electroacústicas"),
     ];
 
-
+    /**
+     * Lista de prueba de productos
+     */
     public static productList = [
         new Product(180442, "Guitarra acústica Vizcaya ARCG44 - Black", "Vizcaya", 1, 59990, 10, false, 0, true, "/images/gtrs/180442.jpg"),
         new Product(180447, "Guitarra acústica Vizcaya ARCG34 3/4 - Natural", "Vizcaya", 1, 54990, 10, true, 40990, true, "/images/gtrs/180447.jpg"),
@@ -86,7 +94,9 @@ export abstract class TestingData {
 
     ];
 
-
+    /**
+     * Lista de prueba de usuarios
+     */
     public static userList = [
         new User("admin", "Admin", "", "", "", "admin@email.com", "Secret.123", true, true),
         new User("ecodisonante", "Francisco", "Valdés", "Flores", "Mi casa", "ecodisonante@gmail.com", "Secret.123", true, false),

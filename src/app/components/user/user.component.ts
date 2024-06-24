@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-
+/**
+ * Componente padre para componentes relacionados a Usuarios
+ */
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -11,19 +13,19 @@ import { RouterOutlet } from '@angular/router';
 })
 export class UserComponent {
 
-  username: string = "";
-  password: string = "";
+  // username: string = "";
+  // password: string = "";
 
 
-  login() {
-    //TODO
-  }
+  // login() {
+  //   //TODO
+  // }
 
-  register() {
-    //TODO
-  }
+  // register() {
+  //   //TODO
+  // }
 
-  recover() {
-    //TODO
-  }
+  // recover() {
+  //   //TODO
+  // }
 }

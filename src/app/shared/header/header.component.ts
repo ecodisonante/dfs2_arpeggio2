@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+/**
+ * @description
+ * Componente encargado de desplegar el header.
+ */
 @Component({
   selector: 'app-header',
   standalone: true,
