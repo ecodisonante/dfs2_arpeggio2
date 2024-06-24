@@ -2,47 +2,28 @@
  * Modelo para Usuario
  */
 export class User {
-    /**
-     * Identificador del Usuario
-     */
+    /** Identificador del Usuario */
     username: string;
-    /**
-     * Nombre del Usuario
-     */
+    /** Nombre del Usuario */
     nombre: string;
-    /**
-     * Apellido Paterno del Usuario
-     */
+    /** Apellido Paterno del Usuario */
     apepat: string;
-    /**
-     * Apellido Materno del Usuario
-     */
+    /** Apellido Materno del Usuario */
     apemat: string;
-    /**
-     * Direccion del Usuario
-     */
+    /** Direccion del Usuario */
     direccion: string;
-    /**
-     * Email del Usuario
-     */
+    /** Email del Usuario */
     email: string;
-    /**
-     * Contraseña del Usuario
-     */
+    /** Contraseña del Usuario */
     password: string;
-    /**
-     * Indica si el Usuario está activo
-     */
+    /** Indica si el Usuario está activo */
     activo: boolean;
-    /**
-     * Contraseña temporal del Usuario
-     */
+    /** Contraseña temporal del Usuario */
     tempPass?: string;
-    /**
-     * Indica si el Usuario tiene permisos de Admin
-     */
+    /** Indica si el Usuario tiene permisos de Admin */
     isAdmin: boolean;
 
+    /** constructor */
     constructor(username: string, nombre: string, apepat: string, apemat: string, direccion: string, email: string, password: string, activo: boolean, isAdmin: boolean, tempPass?: string) {
         this.username = username;
         this.nombre = nombre;

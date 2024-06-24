@@ -31,14 +31,20 @@ export class RegisterComponent {
    * Indicador de usuario con permisos de Admin
    */
   isAdmin: boolean = false;
-
+  
+  /**
+   * constructor
+   */
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
 
     this.registerForm = this.fb.group({

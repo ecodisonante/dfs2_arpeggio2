@@ -2,47 +2,28 @@
  * Modelo para Productos
  */
 export class Product {
-    /**
-     * Identificador unico del producto
-     */
+    /** Identificador unico del producto */
     id: number;
-    /**
-     * Nombre del producto
-     */
+    /** Nombre del producto */
     name: string;
-    /**
-     * Marca del producto
-     */
+    /** Marca del producto */
     brand: string;
-    /**
-     * ID de categoría del producto
-     */
+    /** ID de categoría del producto */
     category: number;
-    /**
-     * Precio del producto
-     */
+    /** Precio del producto */
     price: number;
-    /**
-     * Stock del producto
-     */
+    /** Stock del producto */
     stock: number;
-    /**
-     * Indicador si el producto está en oferta
-     */
+    /** Indicador si el producto está en oferta */
     onSale: boolean;
-    /**
-     * Precio en oferta del producto
-     */
+    /** Precio en oferta del producto */
     salePrice: number;
-    /**
-     * Indicador si el producto está disponible
-     */
+    /** Indicador si el producto está disponible */
     available: boolean;
-    /**
-     * Ruta de imagen del producto
-     */
+    /** Ruta de imagen del producto */
     image: string;
 
+    /** constructor */
     constructor(id: number, name: string, brand: string, category: number, price: number, stock: number, onSale: boolean, salePrice: number, available: boolean, image: string) {
         this.id = id;
         this.name = name;

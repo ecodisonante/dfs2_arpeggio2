@@ -22,14 +22,20 @@ export class RecoveryComponent {
    * Formulario de recuperacion de contraseña
    */
   recoveryForm!: FormGroup;
-
+  
+  /**
+   * constructor
+   */
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     this.recoveryForm = this.fb.group({
       correo: ['', [Validators.required, , Validators.email]],
       usuario: ['', Validators.required],

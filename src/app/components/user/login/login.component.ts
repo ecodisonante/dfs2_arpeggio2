@@ -24,7 +24,10 @@ export class LoginComponent {
    * Formulario de ingreso
    */
   loginForm!: FormGroup;
-
+  
+  /**
+   * constructor
+   */
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -33,7 +36,10 @@ export class LoginComponent {
   ) { }
 
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],

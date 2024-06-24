@@ -9,6 +9,7 @@ import { Product } from '../models/product.model';
     providedIn: 'root'
 })
 export class ProductService {
+    /** Llave para identificar persistencia de catalogo */
     private catalogKey = 'catalogKey';
 
     /**

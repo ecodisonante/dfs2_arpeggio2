@@ -37,7 +37,10 @@ export class CatalogoComponent implements OnInit {
    * Indicador de usuario registrado con permisos de Admin
    */
   isAdmin!: boolean;
-
+  
+  /**
+   * constructor
+   */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -46,7 +49,10 @@ export class CatalogoComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
 
     this.route.queryParams.subscribe(params => {

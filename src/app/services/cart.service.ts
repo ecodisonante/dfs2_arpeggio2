@@ -12,7 +12,9 @@ import { Product } from '../models/product.model';
     providedIn: 'root'
 })
 export class CartService {
+    /** Llave para identificar persistencia de carrito de compras */
     private cartKey = 'cartKey';
+    /** Llave para identificar persistencia de lista de carritos */
     private cartListKey = 'cartListKey';
 
     // ---  Carrito actual --- //

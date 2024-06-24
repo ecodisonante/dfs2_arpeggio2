@@ -18,12 +18,30 @@ import Swal from 'sweetalert2';
 })
 export class NavbarComponent {
 
+  /**
+   * Indicador si hay un usuario registrado
+   */
   isAuthenticated: boolean = false;
+  /**
+   * Indicador si hay un usuario registrado con permisos de acmin
+   */
   isAdmin: boolean = false;
+  /**
+   * Clase inicial aplicada al logo de la barra de navegacion
+   */
   logoClass: string = 'bar-logo-off';
 
-  constructor(private userService: UserService, private router: Router) { }
+  /**
+   * constructor
+   */
+  constructor(
+    private userService: UserService, 
+    private router: Router
+  ) { }
 
+  /**
+   * ngOnInit
+   */
   ngOnInit(): void {
     this.userService.isAuthenticated.subscribe((authStatus: boolean) => { this.isAuthenticated = authStatus; });
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });

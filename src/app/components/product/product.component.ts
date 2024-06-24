@@ -33,7 +33,10 @@ export class ProductComponent {
    * Producto en edicion
    */
   product!: Product;
-
+  
+  /**
+   * constructor
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -56,7 +59,10 @@ export class ProductComponent {
     });
   }
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
 

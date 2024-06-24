@@ -28,14 +28,20 @@ export class CartComponent {
    * Usuario registrado
    */
   user?: User;
-
+  
+  /**
+   * constructor
+   */
   constructor(
     private router: Router,
     private userService: UserService,
     private cartService: CartService
   ) { }
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     this.user = this.userService.getUser() ?? undefined;
     if (!this.user) this.router.navigate(['/user/login']);
     if (this.user?.isAdmin) this.router.navigate(['/']);

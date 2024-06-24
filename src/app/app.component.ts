@@ -23,7 +23,10 @@ export class AppComponent {
    * Titulo de la pagina
    */
   title = 'arpeggio2';
-
+  
+  /**
+   * constructor
+   */
   constructor(
     /**
      * Servicio de Productos
@@ -39,7 +42,10 @@ export class AppComponent {
     private cartService: CartService
   ) { }
 
-  ngOnInit(): void {
+   /**
+   * ngOnInit
+   */
+  ngOnInit():  void {
     if (!this.productService.getCatalog()) this.productService.setCatalog(TestingData.productList);
     if (!this.userService.getUserList()) this.userService.setUserList(TestingData.userList);
     if (!this.cartService.getCartList()) this.cartService.setCartList([]);
