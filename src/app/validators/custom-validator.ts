@@ -1,9 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 /**
- * @description
  * Comprueba la edad del usuario a partir de la fecha de nacimiento.
- * 
  * @param minAge Edad mínima que debe tener para pasar la validación
  */
 export function minAgeValidator(minAge: number): ValidatorFn {
@@ -23,13 +21,6 @@ export function minAgeValidator(minAge: number): ValidatorFn {
 }
 
 /**
- * @description
- * Comprueba que la contraseña cumpla con las medidas de seguridad.
- * - Debe tener entre 6 y 18 caracteres
- * - Debe contener mayúsculas, minúsculas y números
- */
-/**
- * @description
  * Comprueba que la contraseña cumpla con las medidas de seguridad.
  * - Debe tener entre 6 y 18 caracteres
  * - Debe contener mayúsculas, minúsculas y números
@@ -50,9 +41,7 @@ export function passwordStregthValidator() {
 
 
 /**
- * @description
  * Comprueba que las contraseñas ingresadas en el formulario coincidan.
- * 
  * @param passName 
  * @param rePassName 
  * @returns 
