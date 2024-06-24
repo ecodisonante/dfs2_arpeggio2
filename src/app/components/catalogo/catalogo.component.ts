@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
 
 /**
@@ -23,21 +24,24 @@ export class CatalogoComponent implements OnInit {
   catalogo: Product[] = [];
   category: any;
   sale: any;
+  isAdmin!: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
+    this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
+
     this.route.queryParams.subscribe(params => {
       this.category = params['category'];
       this.sale = params['sale'];
       this.productFilter(this.sale, this.category);
     });
-
   }
 
   /**

@@ -22,7 +22,6 @@ import { Cart } from '../../../models/cart.model';
 export class LoginComponent {
 
   loginForm!: FormGroup;
-  successRegister: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +58,7 @@ export class LoginComponent {
         }).then(() => {
           this.router.navigate(['/']);
         });
+        
       } else {
         Swal.fire({
           icon: "error",

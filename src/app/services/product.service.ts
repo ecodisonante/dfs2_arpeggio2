@@ -12,6 +12,15 @@ export class ProductService {
         return prod ?? null;
     }
 
+    updateProduct(prod: Product) {
+        let catalog = this.getCatalog();
+        if (catalog) {
+            let index = catalog.findIndex(x => x.id === prod.id);
+            catalog[index] = prod;
+            this.setCatalog(catalog);
+        }
+    }
+
     // --- Repositorio --- //
 
     setCatalog(catalog: Product[]): void {
@@ -50,7 +59,7 @@ export class ProductService {
             catalogo = catalogo!.filter(x => x.onSale);
 
         if (category)
-            catalogo = catalogo!.filter(x => x.category.id == category);
+            catalogo = catalogo!.filter(x => x.category == category);
 
         return catalogo!;
     }

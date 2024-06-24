@@ -1,10 +1,8 @@
-import { Category } from "./category.model";
-
 export class Product {
     id: number;
     name: string;
     brand: string;
-    category: Category;
+    category: number;
     price: number;
     stock: number;
     onSale: boolean;
@@ -12,7 +10,7 @@ export class Product {
     available: boolean;
     image: string;
 
-    constructor(id: number, name: string, brand: string, category: Category, price: number, stock: number, onSale: boolean, salePrice: number, available: boolean, image: string) {
+    constructor(id: number, name: string, brand: string, category: number, price: number, stock: number, onSale: boolean, salePrice: number, available: boolean, image: string) {
         this.id = id;
         this.name = name;
         this.brand = brand;
