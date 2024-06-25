@@ -84,16 +84,16 @@ export class ProductService {
      * @returns Product[]
      */
     filterProducts(sale?: boolean, category?: number): Product[] {
-        let catalogo = this.getCatalog();
-        if (catalogo == null) return [];
-
+        let catalogo = this.getCatalog() || [];
+    
         if (sale != undefined)
-            catalogo = catalogo!.filter(x => x.onSale);
-
+            catalogo = catalogo.filter(x => x.onSale);
+    
         if (category)
-            catalogo = catalogo!.filter(x => x.category == category);
-
-        return catalogo!;
+            catalogo = catalogo.filter(x => x.category == category);
+    
+        return catalogo;
     }
+    
 
 }

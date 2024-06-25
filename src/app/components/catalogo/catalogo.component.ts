@@ -45,6 +45,7 @@ export class CatalogoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
+ 
     private cartService: CartService,
     private userService: UserService
   ) { }
