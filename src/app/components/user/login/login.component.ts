@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { Cart } from '../../../models/cart.model';
+import { User } from '../../../models/user.model';
 
 /**
  * @description
@@ -24,7 +25,7 @@ export class LoginComponent {
    * Formulario de ingreso
    */
   loginForm!: FormGroup;
-  
+
   /**
    * constructor
    */
@@ -36,10 +37,10 @@ export class LoginComponent {
   ) { }
 
 
-   /**
-   * ngOnInit
-   */
-  ngOnInit():  void {
+  /**
+  * ngOnInit
+  */
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -52,21 +53,29 @@ export class LoginComponent {
    */
   login() {
     if (this.loginForm.valid) {
-      let user = this.userService.findUser(this.loginForm.get('username')?.value.trim().toLowerCase());
 
-      if (user?.password === this.loginForm.get('password')?.value) {
-        this.userService.logIn(user!);
+      const login = this.loginForm.value;
+      let logingUser: User | undefined;
+
+      this.userService.findUser(login.username, login.password).subscribe({
+        next: (data) => logingUser = data,
+        error: (error) => console.log(error)
+      });
+
+
+      if (logingUser) {
+        this.userService.logIn(logingUser);
 
         // activar carrito del usuario
-        if (!user?.isAdmin) {
-          let cart = this.cartService.findUserCart(user!.username);
-          if (!cart) cart = new Cart(user!.username, [], 0, 0);
+        if (!logingUser.isAdmin) {
+          let cart = this.cartService.findUserCart(logingUser.username);
+          if (!cart) cart = new Cart(logingUser.username, [], 0, 0);
           this.cartService.setActiveCart(cart);
         }
 
         Swal.fire({
           icon: "success",
-          title: "Bienvenido, " + user?.nombre,
+          title: "Bienvenido, " + logingUser.nombre,
         }).then(() => {
           this.router.navigate(['/']);
         });

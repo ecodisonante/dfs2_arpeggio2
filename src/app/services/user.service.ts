@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 /**
  * Clase de servicios relacionados a Usuarios
@@ -18,20 +19,50 @@ export class UserService {
     /** Indicador observable de usuario activo con permisos de admin */
     private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
+    private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fuser.json?alt=media&token=b83956f2-6914-4059-b222-a166d06b02d5';
+
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 3aaf6e9c-996e-4022-a780-29ccfe9ab44c'
+        })
+    }
+
+    constructor(
+        private http: HttpClient
+    ) { }
+
     // --- login --- //
 
     /**
      * Agrega sesion de usuario a _sessionStorage_ y actualiza indicadores
      */
-    logIn(user: User): void {
-        // no almacenar la contraseña
-        user.password = "";
+    logIn(user: User): boolean {
         sessionStorage.setItem(this.userKey, JSON.stringify(user));
 
         // recargar restricciones
         this.isLoggedIn.next(this.checkAuthenticated());
         this.isAdmin.next(this.checkAdmin());
+
+        return true
     }
+
+    /**
+     * @description
+     * Obtiene un producto a través de su ID
+     * 
+     * @param id ID del producto solicitado
+     */
+    findUser(username: string, password: string): Observable<User | undefined> {
+        return this.http.get<User[]>(this.userUrl).pipe(
+            map((users: User[]) => {
+                let user = users.find(u => u.username === username && u.password === password);
+                if (user) user.password = "";
+                return user;
+            })
+        );
+    }
+
 
     /**
      * Retorna indicador observable de usuario activo
@@ -51,8 +82,9 @@ export class UserService {
      * Obtiene el usuario activo
      */
     getUser(): User | null {
-        let user = sessionStorage.getItem(this.userKey);
-        return user ? JSON.parse(user) : null;
+        // let user = sessionStorage.getItem(this.userKey);
+        // return user ? JSON.parse(user) : null;
+        return null;
     }
 
     /**
@@ -96,12 +128,12 @@ export class UserService {
         return users ? JSON.parse(users) : null;
     }
 
-    /**
-     * Encontrar un usuario por su _username_
-     */
-    findUser(username: string): User | undefined {
-        return this.getUserList()!.find(x => x.username === username);
-    }
+    // /**
+    //  * Encontrar un usuario por su _username_
+    //  */
+    // findUser(username: string): User | undefined {
+    //     return this.getUserList()!.find(x => x.username === username);
+    // }
 
     /**
      * Agregar usuario a la lista de usuarios
