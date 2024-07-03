@@ -59,34 +59,37 @@ export class LoginComponent {
 
       this.userService.findUser(login.username, login.password).subscribe({
         next: (data) => logingUser = data,
-        error: (error) => console.log(error)
-      });
+        error: (error) => console.log(error),
+        complete: () => {
 
+          if (logingUser) {
+            this.userService.logIn(logingUser);
 
-      if (logingUser) {
-        this.userService.logIn(logingUser);
+            // activar carrito del usuario
+            if (!logingUser.isAdmin) {
+              let cart = this.cartService.findUserCart(logingUser.username);
+              if (!cart) cart = new Cart(logingUser.username, [], 0, 0);
+              this.cartService.setActiveCart(cart);
+            }
 
-        // activar carrito del usuario
-        if (!logingUser.isAdmin) {
-          let cart = this.cartService.findUserCart(logingUser.username);
-          if (!cart) cart = new Cart(logingUser.username, [], 0, 0);
-          this.cartService.setActiveCart(cart);
+            Swal.fire({
+              icon: "success",
+              title: "Bienvenido, " + logingUser.nombre,
+            }).then(() => {
+              this.router.navigate(['/']);
+            });
+
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Credenciales Incorrectas",
+            });
+          }
+
         }
-
-        Swal.fire({
-          icon: "success",
-          title: "Bienvenido, " + logingUser.nombre,
-        }).then(() => {
-          this.router.navigate(['/']);
-        });
-
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Credenciales Incorrectas",
-        });
-      }
+      });
     }
   }
+
 }
