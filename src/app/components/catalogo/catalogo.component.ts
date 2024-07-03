@@ -71,10 +71,10 @@ export class CatalogoComponent implements OnInit {
    * @param category [number] Indicador de categoría
    */
   productFilter(sale?: boolean, category?: number) {
-    this.productService.filterProducts(sale, category).subscribe(
-      cat => this.catalogo = cat,
-      error => console.log(error)
-    );
+    this.productService.filterProducts(sale, category).subscribe({
+      next: (cat) => this.catalogo = cat,
+      error: (error) => console.log(error)
+    });
   }
 
 
