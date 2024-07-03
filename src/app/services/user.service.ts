@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { BehaviorSubject, Observable, Subject, catchError, map, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { StorageService } from './storage.service';
 
 /**
  * Clase de servicios relacionados a Usuarios
@@ -10,13 +11,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root'
 })
 export class UserService {
-    /** Llave para identificar persistencia de usuario */
+    /** 
+     * Llave para identificar persistencia de usuario 
+     */
     private userKey = 'authUser';
-    /** Llave para identificar persistencia de lista de usuarios */
-    private userListKey = 'userList';
-    /** Indicador observable de usuario activo */
+    /** 
+     * Indicador observable de usuario activo 
+     */
     private isLoggedIn = new BehaviorSubject<boolean>(this.checkAuthenticated());
-    /** Indicador observable de usuario activo con permisos de admin */
+    /** 
+     * Indicador observable de usuario activo con permisos de admin 
+     */
     private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
     private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fuser.json?alt=media&token=4afef7b7-3ab9-44c3-be4a-ff0c1ea4365b';
@@ -29,7 +34,8 @@ export class UserService {
     }
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private storage: StorageService
     ) { }
 
     /**
@@ -42,10 +48,10 @@ export class UserService {
     }
 
     /**
-     * Agrega sesion de usuario a _sessionStorage_ y actualiza indicadores
+     * Agrega usuario activo a sessionStorage y actualiza indicadores
      */
     logIn(user: User): boolean {
-        sessionStorage.setItem(this.userKey, JSON.stringify(user));
+        this.storage.setItem(this.userKey, JSON.stringify(user));
 
         // recargar restricciones
         this.isLoggedIn.next(this.checkAuthenticated());
@@ -74,6 +80,10 @@ export class UserService {
 
     /**
      * Agregar usuario a la lista de usuarios
+     * 
+     * @param user Usuario nuevo para agregar
+     * 
+     * @returns Observable<boolean> indica si la operacion se realizó con exito
      */
     addUser(user: User): Observable<boolean> {
         const result = new Subject<boolean>();
@@ -138,17 +148,16 @@ export class UserService {
     /**
      * Obtiene el usuario activo
      */
-    getUser(): User | null {
-        // let user = sessionStorage.getItem(this.userKey);
-        // return user ? JSON.parse(user) : null;
-        return null;
+    getActiveUser(): User | null {
+        let user = this.storage.getItem(this.userKey);
+        return user ? JSON.parse(user) : null;
     }
 
     /**
      * Termina la sesion del usuario
      */
     logOut(): void {
-        sessionStorage.removeItem(this.userKey);
+        this.storage.removeItem(this.userKey);
         this.isLoggedIn.next(this.checkAuthenticated());
         this.isAdmin.next(this.checkAdmin());
     }
@@ -157,40 +166,16 @@ export class UserService {
      * Comprueba si hay un usuario activo
      */
     checkAuthenticated(): boolean {
-        return this.getUser() !== null;
+        return this.getActiveUser() !== null;
     }
 
     /**
      * Comprueba si hay un usuario activo con permisos admin
      */
     checkAdmin(): boolean {
-        return this.getUser() !== null && this.getUser()!.isAdmin;
+        return this.getActiveUser() !== null && this.getActiveUser()!.isAdmin;
     }
 
-
-    // --- Repositorio --- //
-
-    /**
-     * Almacena la lista de usuarios en _localStorage_
-     */
-    setUserList(users: User[]) {
-        localStorage.setItem(this.userListKey, JSON.stringify(users));
-    }
-
-    // /**
-    //  * Obtiene lista completa de usuarios
-    //  */
-    // getUserList(): User[] | null {
-    //     let users = localStorage.getItem(this.userListKey);
-    //     return users ? JSON.parse(users) : null;
-    // }
-
-    // /**
-    //  * Encontrar un usuario por su _username_
-    //  */
-    // findUser(username: string): User | undefined {
-    //     return this.getUserList()!.find(x => x.username === username);
-    // }
 
 
 }
