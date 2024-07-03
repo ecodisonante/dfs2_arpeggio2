@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
+import { User } from '../../../models/user.model';
 
 /**
  * @description
@@ -22,7 +23,7 @@ export class RecoveryComponent {
    * Formulario de recuperacion de contraseña
    */
   recoveryForm!: FormGroup;
-  
+
   /**
    * constructor
    */
@@ -32,10 +33,10 @@ export class RecoveryComponent {
     private router: Router
   ) { }
 
-   /**
-   * ngOnInit
-   */
-  ngOnInit():  void {
+  /**
+  * ngOnInit
+  */
+  ngOnInit(): void {
     this.recoveryForm = this.fb.group({
       correo: ['', [Validators.required, , Validators.email]],
       usuario: ['', Validators.required],
@@ -43,7 +44,6 @@ export class RecoveryComponent {
   }
 
   /**
-   * @description
    * Genera la recuperación de contraseña para el usuario ingresado.
    * - Valida que el username exista en los registros
    * - Valida que el correo y el username coincidan en una misma cuenta
@@ -53,21 +53,28 @@ export class RecoveryComponent {
       const formValue = this.recoveryForm.value;
 
       let pista: string = "";
-      let user = this.userService.findUser(formValue.usuario.trim().toLowerCase());
+      let forgottenUser: User | undefined
 
-      //TODO: eliminar pista
-      if (!user) pista = "El usuario que ingresaste no existe";
-      else if (user.email !== formValue.correo) pista = "El usuario y correo no coinciden";
-      else pista = `Tu password es "${user?.password}"`;
+      this.userService.findUserByEmail(formValue.usuario, formValue.correo).subscribe({
+        next: (data) => forgottenUser = data,
+        error: (error) => console.log(error),
+        complete: () => {
 
-      Swal.fire({
-        icon: "success",
-        title: "Correo Enviado",
-        text: "Si tus datos son correctos, enviaremos un email con tu contraseña",
-        //TODO: eliminar pista
-        footer: `<i class="text-sm">psst!! - ${pista}</i>`,
-      }).then(() => {
-        this.router.navigate(['/']);
+          //TODO: eliminar pista
+          if (!forgottenUser) pista = "Las credenciales que ingresaste no coinciden";
+          else pista = `Tu password es "${forgottenUser?.password}"`;
+
+          Swal.fire({
+            icon: "success",
+            title: "Correo Enviado",
+            text: "Si tus datos son correctos, enviaremos un email con tu contraseña",
+            //TODO: eliminar pista
+            footer: `<i class="text-sm">psst!! - ${pista}</i>`,
+          }).then(() => {
+            this.router.navigate(['/']);
+          });
+          
+        }
       });
     }
   }

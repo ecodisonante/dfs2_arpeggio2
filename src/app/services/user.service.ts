@@ -48,16 +48,35 @@ export class UserService {
     }
 
     /**
-     * @description
-     * Obtiene un producto a través de su ID
+     * Obtiene un usuario a través de su username y constraseña
      * 
-     * @param id ID del producto solicitado
+     * @param username Identificador del usuario solicitado
+     * @param password Contraseña del usuario solicitado
+     * 
+     * @return `Observable` de `User` si coincide un registro, en caso contrario `undefined`
      */
     findUser(username: string, password: string): Observable<User | undefined> {
         return this.http.get<User[]>(this.userUrl).pipe(
             map((users: User[]) => {
                 let user = users.find(u => u.username === username && u.password === password);
                 if (user) user.password = "";
+                return user;
+            })
+        );
+    }
+
+    /**
+     * Obtiene un usuario a través de su username y su email
+     * 
+     * @param username Identificador del usuario solicitado
+     * @param email Correo electrónico del usuario solicitado
+     * 
+     * @return `Observable` de `User` si coincide un registro, en caso contrario `undefined`
+     */
+    findUserByEmail(username: string, email: string): Observable<User | undefined> {
+        return this.http.get<User[]>(this.userUrl).pipe(
+            map((users: User[]) => {
+                let user = users.find(u => u.username === username && u.email === email);
                 return user;
             })
         );
