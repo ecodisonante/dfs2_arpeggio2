@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, map, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 /**
@@ -19,12 +19,12 @@ export class UserService {
     /** Indicador observable de usuario activo con permisos de admin */
     private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
-    private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fuser.json?alt=media&token=b83956f2-6914-4059-b222-a166d06b02d5';
+    private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fuser.json?alt=media&token=4afef7b7-3ab9-44c3-be4a-ff0c1ea4365b';
 
-    httpOptions = {
+    private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 3aaf6e9c-996e-4022-a780-29ccfe9ab44c'
+            'Authorization': 'Bearer 4afef7b7-3ab9-44c3-be4a-ff0c1ea4365b'
         })
     }
 
@@ -32,7 +32,14 @@ export class UserService {
         private http: HttpClient
     ) { }
 
-    // --- login --- //
+    /**
+     * Obtiene la lista completa de usuarios registrados
+     * 
+     * @returns `Observable` de `User[]`
+     */
+    getUserList(): Observable<User[]> {
+        return this.http.get<User[]>(this.userUrl);
+    }
 
     /**
      * Agrega sesion de usuario a _sessionStorage_ y actualiza indicadores
@@ -56,7 +63,7 @@ export class UserService {
      * @return `Observable` de `User` si coincide un registro, en caso contrario `undefined`
      */
     findUser(username: string, password: string): Observable<User | undefined> {
-        return this.http.get<User[]>(this.userUrl).pipe(
+        return this.getUserList().pipe(
             map((users: User[]) => {
                 let user = users.find(u => u.username === username && u.password === password);
                 if (user) user.password = "";
@@ -64,6 +71,37 @@ export class UserService {
             })
         );
     }
+
+    /**
+     * Agregar usuario a la lista de usuarios
+     */
+    addUser(user: User): Observable<boolean> {
+        const result = new Subject<boolean>();
+
+        this.getUserList().subscribe({
+            next: (users) => {
+                // Agrega a lista existente
+                users.push(user);
+                this.http.post(this.userUrl, users, this.httpOptions).pipe(
+                    map(() => {
+                        // Emitir resultado de post
+                        result.next(true);
+                        result.complete();
+                    }),
+                    catchError((error) => {
+                        result.error(false);
+                        return of(false);
+                    })
+                ).subscribe();
+            },
+            error: (err) => {
+                result.error(false);
+            }
+        });
+
+        return result.asObservable();
+    }
+
 
     /**
      * Obtiene un usuario a través de su username y su email
@@ -74,7 +112,7 @@ export class UserService {
      * @return `Observable` de `User` si coincide un registro, en caso contrario `undefined`
      */
     findUserByEmail(username: string, email: string): Observable<User | undefined> {
-        return this.http.get<User[]>(this.userUrl).pipe(
+        return this.getUserList().pipe(
             map((users: User[]) => {
                 let user = users.find(u => u.username === username && u.email === email);
                 return user;
@@ -139,13 +177,13 @@ export class UserService {
         localStorage.setItem(this.userListKey, JSON.stringify(users));
     }
 
-    /**
-     * Obtiene lista completa de usuarios
-     */
-    getUserList(): User[] | null {
-        let users = localStorage.getItem(this.userListKey);
-        return users ? JSON.parse(users) : null;
-    }
+    // /**
+    //  * Obtiene lista completa de usuarios
+    //  */
+    // getUserList(): User[] | null {
+    //     let users = localStorage.getItem(this.userListKey);
+    //     return users ? JSON.parse(users) : null;
+    // }
 
     // /**
     //  * Encontrar un usuario por su _username_
@@ -154,13 +192,5 @@ export class UserService {
     //     return this.getUserList()!.find(x => x.username === username);
     // }
 
-    /**
-     * Agregar usuario a la lista de usuarios
-     */
-    addUser(user: User) {
-        let userList = this.getUserList();
-        if (!userList) userList = [user];
-        else userList.push(user);
-        this.setUserList(userList);
-    }
+
 }
