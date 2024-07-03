@@ -28,16 +28,16 @@ export class CatalogoComponent implements OnInit {
   /**
    * Categoría de productos a mostrar
    */
-  category: any;
+  category?: number;
   /**
    * Indicador para mostrar productos en oferta
    */
-  sale: any;
+  sale?: boolean;
   /**
    * Indicador de usuario registrado con permisos de Admin
    */
   isAdmin!: boolean;
-  
+
   /**
    * constructor
    */
@@ -45,15 +45,15 @@ export class CatalogoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
- 
+
     private cartService: CartService,
     private userService: UserService
   ) { }
 
-   /**
-   * ngOnInit
-   */
-  ngOnInit():  void {
+  /**
+  * ngOnInit
+  */
+  ngOnInit(): void {
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
 
     this.route.queryParams.subscribe(params => {
@@ -71,8 +71,12 @@ export class CatalogoComponent implements OnInit {
    * @param category [number] Indicador de categoría
    */
   productFilter(sale?: boolean, category?: number) {
-    this.catalogo = this.productService.filterProducts(sale, category);
+    this.productService.filterProducts(sale, category).subscribe(
+      cat => this.catalogo = cat,
+      error => console.log(error)
+    );
   }
+
 
   /**
    * @description
