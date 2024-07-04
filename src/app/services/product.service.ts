@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, catchError, map, of } from 'rxjs';
 
 /**
- * @description
  * Clase de servicios relacionados a Producto
  */
 @Injectable({
@@ -12,8 +11,7 @@ import { Observable, map } from 'rxjs';
 })
 export class ProductService {
 
-  private url: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fproduct.json?alt=media&token=3aaf6e9c-996e-4022-a780-29ccfe9ab44c';
-
+  private productUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fproduct.json?alt=media&token=3aaf6e9c-996e-4022-a780-29ccfe9ab44c';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -22,27 +20,24 @@ export class ProductService {
     })
   }
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
 
   /**
-   * @description
    * Obtiene el cataolgo completo de productos
+   * @returns `Observable` lista completa de `Product`
    */
   getProductList(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url);
+    return this.http.get<Product[]>(this.productUrl);
   }
 
   /**
-   * @description
    * Obtiene un producto a través de su ID
-   * 
    * @param id ID del producto solicitado
+   * @returns `Observable` del `Product` buscado o `undefined` si no se encuentra
    */
   getProduct(id: number): Observable<Product | undefined> {
-    return this.http.get<Product[]>(this.url).pipe(
+    return this.http.get<Product[]>(this.productUrl).pipe(
       map((prods: Product[]) => {
         return prods.find(p => p.id === id);
       })
@@ -50,63 +45,53 @@ export class ProductService {
   }
 
 
-  // /**
-  //  * @description
-  //  * Actualiza un producto en el catalogo de productos
-  //  * 
-  //  * @param prod Producto a actualizar
-  //  */
-  // TODO
-  // updateProduct(prod: Product) {
-  //   let catalog = this.getCatalog();
-  //   if (catalog) {
-  //     let index = catalog.findIndex(x => x.id === prod.id);
-  //     catalog[index] = prod;
-  //     this.setCatalog(catalog);
-  //   }
-  // }
+  /**
+   * Actualiza un producto en el catalogo de productos
+   * @param prod Producto a actualizar
+   * @returns Observable<boolean> indica si la operacion se realizó con exito
+   */
+  updateProduct(prod: Product): Observable<boolean> {
+    const result = new Subject<boolean>();
 
-  // --- Repositorio --- //
+    this.getProductList().subscribe({
+      next: (products) => {
+        // actualiza producto
+        let index = products.findIndex(x => x.id === prod.id);
+        products[index] = prod;
 
+        this.http.post(this.productUrl, products, this.httpOptions).pipe(
+          map(() => {
+            result.next(true);
+            result.complete();
+          }),
+          catchError((error) => {
+            result.error(false);
+            return of(false);
+          })
+        ).subscribe();
+      },
+      error: (err) => {
+        result.error(false);
+      }
+    });
 
-  // /**
-  //  * @description
-  //  * Almacena el cataolgo completo de productos en el _localStorage_
-  //  * 
-  //  * @param catalog Listado de productos a almacenar
-  //  */
-  //TODO
-  // setCatalog(catalog: Product[]): void {
-  //   localStorage.setItem(this.catalogKey, JSON.stringify(catalog));
-  // }
+    return result.asObservable();
+  }
 
-
-  // /**
-  //  * @description
-  //  * Elimina el cataolgo completo de productos de _localStorage_
-  //  */
-  //TODO
-  // removeCatalog(): void {
-  //   localStorage.removeItem(this.catalogKey);
-  // }
 
   /**
-  * @description
   * Obtiene un listado de productos según los filtros especificados
-  * 
   * @param sale [boolean] Indicador de ofertas. 
   * - Si es _true_ mostrará solo ofertas. 
   * - Si es _false_ mostrará solo productos que no estén en oferta
   * - Si no se envía el parámetro, no se aplica filtro de ofertas.
-  * 
   * @param category [number] Indicador de categoría
   * - Si es numero se mostrarán solo los productos de la categoría con el id indicado
   * - Si no se envía el parámetro, no se aplica filtro de categoría.
-  * 
-  * @returns Product[]
+  * @returns `Observable` lista de `Product` filtrados
   */
   filterProducts(sale?: boolean, category?: number): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url).pipe(
+    return this.http.get<Product[]>(this.productUrl).pipe(
       map((prods: Product[]) => {
 
         // Soluciona problema de parametros string ¿?
