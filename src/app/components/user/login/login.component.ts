@@ -65,11 +65,9 @@ export class LoginComponent {
           if (logingUser) {
             this.userService.logIn(logingUser);
 
-            // activar carrito del usuario
+            // Crear carrito del usuario
             if (!logingUser.isAdmin) {
-              let cart = this.cartService.findUserCart(logingUser.username);
-              if (!cart) cart = new Cart(logingUser.username, [], 0, 0);
-              this.cartService.setActiveCart(cart);
+              this.cartService.setActiveCart(new Cart(logingUser.username, [], 0, 0));
             }
 
             Swal.fire({
