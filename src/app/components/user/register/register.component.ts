@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.model';
 import Swal from 'sweetalert2';
+import { error } from 'console';
 
 /**
  * @description
@@ -31,7 +32,7 @@ export class RegisterComponent {
    * Indicador de usuario con permisos de Admin
    */
   isAdmin: boolean = false;
-  
+
   /**
    * constructor
    */
@@ -41,10 +42,10 @@ export class RegisterComponent {
     private router: Router
   ) { }
 
-   /**
-   * ngOnInit
-   */
-  ngOnInit():  void {
+  /**
+  * ngOnInit
+  */
+  ngOnInit(): void {
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
 
     this.registerForm = this.fb.group({
@@ -72,39 +73,71 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;
 
-      let nuevo = new User(
-        formValue.usuario,
-        formValue.nombres,
-        formValue.apepat,
-        formValue.apemat,
-        formValue.direccion,
-        formValue.correo,
-        formValue.passwd,
-        true,
-        formValue.isadmin,
-        undefined
-      );
+      let existingUser: User | undefined
 
-      if (this.userService.findUser(nuevo.username)) {
+      this.userService.findUserByEmail(formValue.usuario, formValue.correo).subscribe({
+        next: (data) => existingUser = data,
+        error: (error) => console.log(error),
+        complete: () => {
+
+          if (existingUser) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Ya hay un registro con ese nombre de usuario",
+            });
+          } else {
+
+            this.saveUser(formValue);
+          }
+        }
+      });
+    }
+  }
+
+  private saveUser(form: any) {
+
+    let nuevo = new User(
+      form.usuario,
+      form.nombres,
+      form.apepat,
+      form.apemat,
+      form.direccion,
+      form.correo,
+      form.passwd,
+      true,
+      form.isadmin,
+      undefined
+    );
+
+    let result: boolean;
+    this.userService.addUser(nuevo).subscribe({
+      next: (data) => result = data,
+
+      error: (error) => {
+        console.log(error);
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Ya hay un registro con ese nombre de usuario",
+          text: error,
         });
-      } else {
-        this.userService.addUser(nuevo);
-        this.successRegister = true;
+      },
 
-        Swal.fire({
-          icon: "success",
-          title: "Usuario registrado",
-        }).then(() => {
-          this.router.navigate(['/']);
-        });
+      complete: () => {
+        if (result) {
+
+          Swal.fire({
+            icon: "success",
+            title: "Usuario registrado",
+          }).then(() => {
+            this.router.navigate(['/']);
+          });
+
+          console.log("Success Register!!");
+          this.successRegister = true;
+        }
       }
-
-      console.log("Success Register!!");
-    }
+    });
   }
 
 }

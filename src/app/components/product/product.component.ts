@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Product } from '../../models/product.model';
-import { TestingData } from '../../models/testing-data';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -32,8 +31,8 @@ export class ProductComponent {
   /**
    * Producto en edicion
    */
-  product!: Product;
-  
+  product?: Product;
+
   /**
    * constructor
    */
@@ -59,23 +58,24 @@ export class ProductComponent {
     });
   }
 
-   /**
-   * ngOnInit
-   */
-  ngOnInit():  void {
+  /**
+  * ngOnInit
+  */
+  ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
+      if (!id || isNaN(Number(id))) this.router.navigate(['/']);
 
-      if (!id) this.router.navigate(['/']);
-      if (isNaN(Number(id))) this.router.navigate(['/']);
-
-      this.product = this.productService.getProduct(Number(id))!;
-      if (!this.product) this.router.navigate(['/']);
-
-      this.title = this.product!.name;
+      this.productService.getProduct(Number(id)).subscribe(
+        data => {
+          this.product = data;
+          if (this.product) {
+            this.productForm.patchValue(this.product);
+            this.title = this.product.name;
+          }
+        }
+      );
     });
-
-    this.productForm.patchValue(this.product!);
   }
 
   /**
@@ -85,15 +85,21 @@ export class ProductComponent {
   edit() {
     if (this.productForm.valid) {
       let edited = this.productForm.value;
-      edited.image = this.product.image;
-      this.productService.updateProduct(edited);
+      edited.image = this.product!.image;
 
-      Swal.fire({
-        icon: "success",
-        title: "Producto actualizado",
-      }).then(() => {
-        this.router.navigate(['']);
+      this.productService.updateProduct(edited).subscribe(result => {
+        if (result) {
+
+          Swal.fire({
+            icon: "success",
+            title: "Producto actualizado",
+          }).then(() => {
+            this.router.navigate(['']);
+          });
+
+        }
       });
+
     }
   }
 
