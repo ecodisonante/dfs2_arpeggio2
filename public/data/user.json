@@ -1,0 +1,24 @@
+[
+    {
+        "username": "admin",
+        "nombre": "Admin",
+        "apepat": "",
+        "apemat": "",
+        "direccion": "",
+        "email": "admin@email.com",
+        "password": "Secret.123",
+        "activo": true,
+        "isAdmin": true
+    },
+    {
+        "username": "ecodisonante",
+        "nombre": "Francisco",
+        "apepat": "Valdés",
+        "apemat": "Flores",
+        "direccion": "Mi casa",
+        "email": "ecodisonante@gmail.com",
+        "password": "Secret.123",
+        "activo": true,
+        "isAdmin": false
+    }
+]

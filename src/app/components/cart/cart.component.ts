@@ -28,7 +28,7 @@ export class CartComponent {
    * Usuario registrado
    */
   user?: User;
-  
+
   /**
    * constructor
    */
@@ -38,11 +38,11 @@ export class CartComponent {
     private cartService: CartService
   ) { }
 
-   /**
-   * ngOnInit
-   */
-  ngOnInit():  void {
-    this.user = this.userService.getUser() ?? undefined;
+  /**
+  * ngOnInit
+  */
+  ngOnInit(): void {
+    this.user = this.userService.getActiveUser() ?? undefined;
     if (!this.user) this.router.navigate(['/user/login']);
     if (this.user?.isAdmin) this.router.navigate(['/']);
 
@@ -54,7 +54,9 @@ export class CartComponent {
    * Obtiene el carrito de compras del usuario activo.
    */
   getActiveCart() {
-    this.cart = this.cartService.getActiveCart() ?? new Cart(this.user!.username, [], 0, 0);
+    if (this.user) {
+      this.cart = this.cartService.getActiveCart() ?? new Cart(this.user.username, [], 0, 0);
+    }
   }
 
   /**

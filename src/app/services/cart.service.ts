@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { User } from '../models/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { Cart } from '../models/cart.model';
 import { Product } from '../models/product.model';
+import { StorageService } from './storage.service';
 
 /**
  * @description
@@ -17,14 +18,13 @@ export class CartService {
     /** Llave para identificar persistencia de lista de carritos */
     private cartListKey = 'cartListKey';
 
-    // ---  Carrito actual --- //
+    private storage = inject(StorageService);
 
     /**
-     * @description
      * Obtener el carrito de compras actual del almacenamiento _sessionStorage_
      */
     getActiveCart(): Cart | null {
-        let cartList = sessionStorage.getItem(this.cartKey);
+        let cartList = this.storage.getItem(this.cartKey);
         return cartList ? JSON.parse(cartList) : null;
     }
 
@@ -35,7 +35,7 @@ export class CartService {
      * @param cart Carrito a guardar
      */
     setActiveCart(cart: Cart) {
-        sessionStorage.setItem(this.cartKey, JSON.stringify(cart));
+        this.storage.setItem(this.cartKey, JSON.stringify(cart));
     }
 
     /**
@@ -43,7 +43,7 @@ export class CartService {
      * Elimina el carrito de compras del almacenamiento _sessionStorage_
      */
     clearActiveCart() {
-        sessionStorage.removeItem(this.cartKey);
+        this.storage.removeItem(this.cartKey);
     }
 
     // Agrega prod al carrito
@@ -101,38 +101,5 @@ export class CartService {
 
         return cart;
     }
-
-
-    // ---  repositorio --- //
-
-    /**
-     * @description
-     * Obtiene el carrito de compras del usuario activo
-     * 
-     * @param username usuario activo
-     */
-    findUserCart(username: string): Cart | undefined {
-        return this.getCartList()?.find(x => x.username === username);
-    }
-
-    /**
-     * @description
-     * Obtiene la lista de todos los carritos de compra almacenados en _localStorage_
-     */
-    getCartList(): Cart[] | null {
-        let cartList = localStorage.getItem(this.cartListKey);
-        return cartList ? JSON.parse(cartList) : null;
-    }
-
-    /**
-     * @description
-     * Almacena la lista de todos los carritos de compra almacenados en _localStorage_
-     * 
-     * @param carts lista de carritos de compra
-     */
-    setCartList(carts: Cart[]) {
-        localStorage.setItem(this.cartListKey, JSON.stringify(carts));
-    }
-
 
 }

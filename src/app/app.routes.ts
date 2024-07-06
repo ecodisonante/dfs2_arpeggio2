@@ -46,12 +46,8 @@ export const routes: Routes = [
             }
         ]
     },
-
-
-
-
     { // Momentaneamente el home es la pagina categorias
-        path: '',
+        path: '**',
         redirectTo: 'catalogo',
         pathMatch: 'full'
     }
