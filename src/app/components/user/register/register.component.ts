@@ -70,6 +70,8 @@ export class RegisterComponent {
    * - Solo los administradores pueden crear nuevos usuarios con rol admin
    */
   register() {
+    this.registerForm.markAllAsTouched();
+
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;
 
