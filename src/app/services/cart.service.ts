@@ -6,18 +6,23 @@ import { Product } from '../models/product.model';
 import { StorageService } from './storage.service';
 
 /**
- * @description
  * Clase de servicios relacionados a Carrito de Compras
  */
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    /** Llave para identificar persistencia de carrito de compras */
+    /** 
+     * Llave para identificar persistencia de carrito de compras 
+     */
     private cartKey = 'cartKey';
-    /** Llave para identificar persistencia de lista de carritos */
+    /** 
+     * Llave para identificar persistencia de lista de carritos
+     */
     private cartListKey = 'cartListKey';
-
+    /**
+     * Proveedor de StorageService
+     */
     private storage = inject(StorageService);
 
     /**
@@ -45,8 +50,6 @@ export class CartService {
     clearActiveCart() {
         this.storage.removeItem(this.cartKey);
     }
-
-    // Agrega prod al carrito
 
     /**
      * @description
@@ -81,7 +84,6 @@ export class CartService {
             this.setActiveCart(cart);
         }
     }
-
 
     /**
      * @description

@@ -6,6 +6,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { RecoveryComponent } from './components/user/recovery/recovery.component';
 import { CartComponent } from './components/cart/cart.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
 
 export const routes: Routes = [
 
@@ -43,7 +44,12 @@ export const routes: Routes = [
                 path: 'recovery',
                 title: 'Recuperar Contraseña',
                 component: RecoveryComponent,
-            }
+            },
+            {
+                path: 'perfil',
+                title: 'Modificar Perfil',
+                component: PerfilComponent,
+            },
         ]
     },
     { // Momentaneamente el home es la pagina categorias

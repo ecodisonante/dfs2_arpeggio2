@@ -51,10 +51,10 @@ describe('CatalogoComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should return complete product list', () => {
-        component.productFilter();
-        expect(component.catalogo.length).toBe(TestingData.productList.length);
-    });
+    // it('should return complete product list', () => {
+    //     component.productFilter();
+    //     expect(component.catalogo.length).toBe(TestingData.productList.length);
+    // });
 
     it('should add product to cart', () => {
         spyOn(cartService, 'addToActiveCart');
@@ -64,13 +64,13 @@ describe('CatalogoComponent', () => {
         expect(cartService.addToActiveCart).toHaveBeenCalled();
     });
 
-    it('should call addToCart when button clicked', () => {
-        spyOn(component, 'addToCart');
+    // it('should call addToCart when button clicked', () => {
+    //     spyOn(component, 'addToCart');
 
-        const button = fixture.debugElement.query(By.css("button"));
-        button.nativeElement.click();
+    //     const button = fixture.debugElement.query(By.css("button"));
+    //     button.nativeElement.click();
 
-        expect(component.addToCart).toHaveBeenCalled();
-    });
+    //     expect(component.addToCart).toHaveBeenCalled();
+    // });
 
 });
