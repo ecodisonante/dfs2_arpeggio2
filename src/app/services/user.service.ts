@@ -112,6 +112,45 @@ export class UserService {
         return result.asObservable();
     }
 
+    /**
+     * Actualizar usuario en la lista de usuarios
+     * 
+     * @param updatedUser Usuario nuevo para actualizar
+     * 
+     * @returns Observable<boolean> indica si la operacion se realizó con exito
+     */
+    updateUser(updatedUser: User): Observable<boolean> {
+        const result = new Subject<boolean>();
+
+        this.getUserList().subscribe({
+            next: (users) => {
+
+                // actualiza usuario
+                let index = users.findIndex(x => x.username === updatedUser.username);
+                users[index] = updatedUser;
+                
+                this.http.post(this.userUrl, users, this.httpOptions).pipe(
+                    map(() => {
+                        // Emitir resultado de post
+                        result.next(true);
+                        result.complete();
+                    }),
+                    catchError((error) => {
+                        result.error(false);
+                        return of(false);
+                    })
+                ).subscribe();
+            },
+            error: (err) => {
+                result.error(false);
+            }
+        });
+
+        this.logIn(updatedUser);
+        return result.asObservable();
+    }
+
+
 
     /**
      * Obtiene un usuario a través de su username y su email
