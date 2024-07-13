@@ -39,6 +39,7 @@
                         <li *ngIf="!isAuthenticated || isAdmin"><a class="dropdown-item" [routerLink]="['/user/register']"><i class="bi bi-plus-lg mx-2"></i>Crear Cuenta</a></li>
                         <li *ngIf="!isAuthenticated"><a class="dropdown-item" [routerLink]="['/user/recovery']"><i class="bi bi-question mx-2"></i>Recuperar Contraseña</a></li>
                         <!-- <li *ngIf="isAdmin"><a class="dropdown-item" [routerLink]="['/user/login']"><i class="bi bi-gear-wide mx-2"></i>Administrar</a></li> -->
+                        <li *ngIf="isAuthenticated"><a class="dropdown-item" [routerLink]="['/user/perfil']"><i class="bi bi-person mx-2"></i>Actualizar Perfil</a></li>
                         <li *ngIf="isAuthenticated"><a class="dropdown-item" (click)="salir()"><i class="bi bi-arrow-left mx-2"></i>Salir</a></li>
                     </ul>
                   </li>
