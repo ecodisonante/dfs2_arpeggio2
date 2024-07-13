@@ -11,6 +11,7 @@ import { StorageService } from './storage.service';
     providedIn: 'root'
 })
 export class UserService {
+
     /** 
      * Llave para identificar persistencia de usuario 
      */
@@ -23,9 +24,13 @@ export class UserService {
      * Indicador observable de usuario activo con permisos de admin 
      */
     private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
-
+    /**
+     * URL de almacenamiento de usuarios
+     */
     private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fuser.json?alt=media&token=4afef7b7-3ab9-44c3-be4a-ff0c1ea4365b';
-
+    /**
+     * Cabecera para acceder al almacenamiento de usuarios
+     */
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -33,6 +38,9 @@ export class UserService {
         })
     }
 
+    /**
+     * Constructor de la clase
+     */
     constructor(
         private http: HttpClient,
         private storage: StorageService
@@ -40,7 +48,6 @@ export class UserService {
 
     /**
      * Obtiene la lista completa de usuarios registrados
-     * 
      * @returns `Observable` de `User[]`
      */
     getUserList(): Observable<User[]> {
@@ -62,10 +69,8 @@ export class UserService {
 
     /**
      * Obtiene un usuario a través de su username y constraseña
-     * 
      * @param username Identificador del usuario solicitado
      * @param password Contraseña del usuario solicitado
-     * 
      * @return `Observable` de `User` si coincide un registro, en caso contrario `undefined`
      */
     findUser(username: string, password: string): Observable<User | undefined> {
@@ -80,9 +85,7 @@ export class UserService {
 
     /**
      * Agregar usuario a la lista de usuarios
-     * 
      * @param user Usuario nuevo para agregar
-     * 
      * @returns Observable<boolean> indica si la operacion se realizó con exito
      */
     addUser(user: User): Observable<boolean> {
@@ -114,9 +117,7 @@ export class UserService {
 
     /**
      * Actualizar usuario en la lista de usuarios
-     * 
      * @param updatedUser Usuario nuevo para actualizar
-     * 
      * @returns Observable<boolean> indica si la operacion se realizó con exito
      */
     updateUser(updatedUser: User): Observable<boolean> {
@@ -128,7 +129,7 @@ export class UserService {
                 // actualiza usuario
                 let index = users.findIndex(x => x.username === updatedUser.username);
                 users[index] = updatedUser;
-                
+
                 this.http.post(this.userUrl, users, this.httpOptions).pipe(
                     map(() => {
                         // Emitir resultado de post
@@ -154,10 +155,8 @@ export class UserService {
 
     /**
      * Obtiene un usuario a través de su username y su email
-     * 
      * @param username Identificador del usuario solicitado
      * @param email Correo electrónico del usuario solicitado
-     * 
      * @return `Observable` de `User` si coincide un registro, en caso contrario `undefined`
      */
     findUserByEmail(username: string, email: string): Observable<User | undefined> {
@@ -168,7 +167,6 @@ export class UserService {
             })
         );
     }
-
 
     /**
      * Retorna indicador observable de usuario activo

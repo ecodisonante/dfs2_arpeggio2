@@ -7,6 +7,9 @@ import { passwordMatchValidator, passwordStregthValidator } from '../../../valid
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Clase encargada de la actualizacion de perfil de usuario
+ */
 @Component({
   selector: 'app-perfil',
   standalone: true,
@@ -24,16 +27,12 @@ export class PerfilComponent {
    */
   successUpdate: boolean = false;
   /**
-   * Indicador de usuario con permisos de Admin
-   */
-  // isAdmin: boolean = false;
-  /**
    * Identificador del usuario que modifica su perfil
    */
   currentUser!: User;
 
   /**
-   * constructor
+   * constructor de la clase
    */
   constructor(
     private fb: FormBuilder,
@@ -46,8 +45,8 @@ export class PerfilComponent {
   }
 
   /**
-  * ngOnInit
-  */
+   * metodo inicial de la clase
+   */
   ngOnInit(): void {
 
     this.updateForm = this.fb.group({

@@ -11,8 +11,14 @@ import { Observable, Subject, catchError, map, of } from 'rxjs';
 })
 export class ProductService {
 
+  /**
+   * URL de almacenamiento de productos
+   */
   private productUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fproduct.json?alt=media&token=3aaf6e9c-996e-4022-a780-29ccfe9ab44c';
 
+  /**
+   * Cabecera para acceder al almacenamiento de productos
+   */
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -20,6 +26,9 @@ export class ProductService {
     })
   }
 
+  /**
+   * Constructor de la clase
+   */
   constructor(private http: HttpClient) { }
 
 
@@ -43,7 +52,6 @@ export class ProductService {
       })
     );
   }
-
 
   /**
    * Actualiza un producto en el catalogo de productos

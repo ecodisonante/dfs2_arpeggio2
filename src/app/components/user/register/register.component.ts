@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 import { error } from 'console';
 
 /**
- * @description
  * Componente para manejar el registro de nuevos usuarios.
  */
 @Component({
@@ -34,7 +33,7 @@ export class RegisterComponent {
   isAdmin: boolean = false;
 
   /**
-   * constructor
+   * constructor de la clase
    */
   constructor(
     private fb: FormBuilder,
@@ -43,8 +42,8 @@ export class RegisterComponent {
   ) { }
 
   /**
-  * ngOnInit
-  */
+   * metodo inicial de la clase
+   */
   ngOnInit(): void {
     this.userService.isAdminAuth.subscribe((adminStatus: boolean) => { this.isAdmin = adminStatus; });
 
@@ -64,8 +63,7 @@ export class RegisterComponent {
   }
 
   /**
-   * @description
-   * Genera un nuevo usuario con los datos ingresados en el formulario
+   * Procesa los datos ingresados en el formulario
    * - Verifica que el username no haya sido utilizado previamente
    * - Solo los administradores pueden crear nuevos usuarios con rol admin
    */
@@ -97,6 +95,10 @@ export class RegisterComponent {
     }
   }
 
+  /**
+   * Genera un nuevo usuario con los datos ingresados en el formulario
+   * @param form formulario de registro
+   */
   private saveUser(form: any) {
 
     let nuevo = new User(
