@@ -6,9 +6,9 @@ trigger:
 
 variables:
  # Variables de entorno
- ACR_NAME: 'grupo3test' # Colocar el nombre de tu ACR
- IMAGE_NAME: 'grupo3test' # Colocar el Nombre de Imagen
- SERVICE_CONNECTION_NAME: 'grupo3test-docker' # Colocar nombre del Service Connection ubicado en Docker Registry-- Azure Container Registry
+ ACR_NAME: 'CRdevopsS8' # Colocar el nombre de tu ACR
+ IMAGE_NAME: 'img-devops-s8' # Colocar el Nombre de Imagen
+ SERVICE_CONNECTION_NAME: 'srv-devops-s8' # Colocar nombre del Service Connection ubicado en Docker Registry-- Azure Container Registry
 
 
 jobs:
