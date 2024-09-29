@@ -14,6 +14,8 @@ RUN npm run build --prod
 
 FROM nginx:1.27.0
 
+# Copia el archivo de configuración de Nginx al contenedor
+COPY default.conf /etc/nginx/conf.d/default.conf
 # copiar compilacion al contenedor
 COPY --from=build-step /app/dist/arpeggio2/browser /usr/share/nginx/html
 # pisar index.html default de nginx
