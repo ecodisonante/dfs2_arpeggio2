@@ -1,15 +1,14 @@
 trigger:
  branches:
    include:
-     - main
-
+     - pipeline
 
 variables:
- VM_IP_PUBLICA: '20.81.212.90'  # IP pública de tu máquina virtual
- IMAGE_NAME: 'grupo3test'  # Nombre de la imagen que será descargada desde ACR
- ACR_NAME: 'grupo3test'  # Nombre de tu Azure Container Registry (ACR)
- ACR_USERNAME: 'grupo3test'  # Nombre de usuario del ACR
- ACR_PASSWORD: 'tSONCMu2tSM29tgxeFtOSNK0z0HPdxKydqTMO3nKKK+ACRBbZ12T'  # Contraseña del ACR
+ VM_IP_PUBLICA: '20.81.145.37'  # IP pública de tu máquina virtual
+ IMAGE_NAME: 'img-devops-s8'  # Nombre de la imagen que será descargada desde ACR
+ ACR_NAME: 'CRdevopsS8'  # Nombre de tu Azure Container Registry (ACR)
+ ACR_USERNAME: 'CRdevopsS8'  # Nombre de usuario del ACR
+ ACR_PASSWORD: 'cp9v/jdBnVbo0S0y+3yAH9lwJoElHlZKqUd/LAr+uu+ACRApj4Ng'  # Contraseña del ACR
 
 
 stages:
@@ -75,7 +74,7 @@ stages:
 
 
                    # Descargar la imagen desde ACR
-                   sudo docker pull ${ACR_NAME}.azurecr.io/${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
+                   sudo docker pull ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
 
 
                    # Verificar si el contenedor ya está en ejecución
