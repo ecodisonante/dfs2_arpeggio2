@@ -14,7 +14,7 @@ export class ProductService {
   /**
    * URL de almacenamiento de productos
    */
-  private productUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fproduct.json?alt=media&token=3aaf6e9c-996e-4022-a780-29ccfe9ab44c';
+  private productUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-arpeggio.appspot.com/o/product.json?alt=media&token=22c9e248-d8c0-4bb5-84ac-010e253b67e0';
 
   /**
    * Cabecera para acceder al almacenamiento de productos
@@ -22,7 +22,7 @@ export class ProductService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 3aaf6e9c-996e-4022-a780-29ccfe9ab44c'
+      'Authorization': 'Bearer 22c9e248-d8c0-4bb5-84ac-010e253b67e0'
     })
   }
 

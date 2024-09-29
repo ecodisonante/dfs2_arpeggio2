@@ -27,17 +27,16 @@ export class UserService {
     /**
      * URL de almacenamiento de usuarios
      */
-    private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-1f652.appspot.com/o/arpeggio%2Fuser.json?alt=media&token=4afef7b7-3ab9-44c3-be4a-ff0c1ea4365b';
+    private userUrl: string = 'https://firebasestorage.googleapis.com/v0/b/dfs2-arpeggio.appspot.com/o/user.json?alt=media&token=96345636-4e18-4a5d-b58d-a5d70b4bb2fc';
     /**
      * Cabecera para acceder al almacenamiento de usuarios
      */
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 4afef7b7-3ab9-44c3-be4a-ff0c1ea4365b'
+            'Authorization': 'Bearer 96345636-4e18-4a5d-b58d-a5d70b4bb2fc'
         })
     }
-
     /**
      * Constructor de la clase
      */
