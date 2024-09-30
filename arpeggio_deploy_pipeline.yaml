@@ -83,7 +83,7 @@ stages:
                      sudo docker start nginx_container
                    else
                      echo "El contenedor 'nginx_container' no existe. Creándolo y ejecutándolo..."
-                     sudo docker run -d -p 80:80 --name nginx_container ${ACR_NAME}.azurecr.io/${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
+                     sudo docker run -d -p 80:80 --name nginx_container ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
                    fi
 
 
