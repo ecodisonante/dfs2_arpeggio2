@@ -17,7 +17,7 @@ stages:
      - deployment: DeployToVM
        displayName: 'Deploy to VM'
        environment:
-         name: 'test'  # Nombre del entorno configurado en Azure DevOps
+         name: 'VM-DEVOPS-S8'  # Nombre del entorno configurado en Azure DevOps
          resourceType: VirtualMachine  # Especifica que se conecta a una máquina virtual
        strategy:
          runOnce:
