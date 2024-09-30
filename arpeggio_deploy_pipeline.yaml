@@ -6,7 +6,7 @@ trigger:
 variables:
  VM_IP_PUBLICA: '20.81.145.37'  # IP pública de tu máquina virtual
  IMAGE_NAME: 'img-devops-s8'  # Nombre de la imagen que será descargada desde ACR
- ACR_NAME: 'CRdevopsS8'  # Nombre de tu Azure Container Registry (ACR)
+ ACR_NAME: 'crdevopss8'  # Nombre de tu Azure Container Registry (ACR)
  ACR_USERNAME: 'CRdevopsS8'  # Nombre de usuario del ACR
  ACR_PASSWORD: 'cp9v/jdBnVbo0S0y+3yAH9lwJoElHlZKqUd/LAr+uu+ACRApj4Ng'  # Contraseña del ACR
 
